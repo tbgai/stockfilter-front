@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<link rel="stylesheet" href="css/stf.css" />
+		<script type="text/javascript" src="js/stf.js" ></script>
 		<title>StockFilter v0.1</title>
 	</head>
 	<body>
@@ -10,8 +12,11 @@
 		输出配置：
 		股票范围：
 		
-		
+		<button id="btn_query" onclick="putParam()">提交处理</button>
 		处理过程：
+		<div class="processcontainer">  
+			<div id="processbar" style="width:0%;"></div>  
+  		</div>
 		
 		
 		处理结果：
