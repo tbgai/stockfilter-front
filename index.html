@@ -4,24 +4,66 @@
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="css/stf.css" />
 		<script type="text/javascript" src="js/stf.js" ></script>
-		<title>StockFilter v0.1</title>
+		<title>StockFilter - 股票量化过滤</title>
 	</head>
 	<body>
-		<img href="img/stat.png" height="32" width="32"/>
-		基准数据：
-		算法参数：
-		输出配置：
-		股票范围：
+		<h1><img src="img/stat.png" height="30" width="30" /> &nbsp;&nbsp;StockFilter v0.1</h1>
+		<hr>
+		<h2>参数设置</h2>
+		<h3>1）基准数据（可以根据需要自行修改设定）：</h3>
+		<input type="text" name="basestk" class="item_text1" value="20.28,20.31,21.27,21.89,21.53,22.65,22.98,23.23,22.7,22.34,21.76,22.09,21.6,21.9,21.88,23.1,22.99,22.54,22.63,22.52,22.99">
 		
-		<button id="btn_query" onclick="putParam()">提交处理</button>
-		处理过程：
-		<div class="processcontainer">  
-			<div id="processbar" style="width:0%;"></div>  
+		<h3>2）算法参数：</h3>
+		<label>是否二阶导比较：</label><input type="checkbox">
+		<br>
+		<label>一阶导因子：</label><input type="text" name="delta_one" value="1.1">(0~3)
+		<br>
+		<label>二阶导因子：</label><input type="text" name="delta_two" value="1.1">(0~3)
+		
+		<h3>3）输出配置：</h3>
+		<label>是否输出图片：</label><input type="checkbox" checked="checked">
+		<br>
+		<label>股票曲线展示记录数：</label><input type="number" name="stk_count" value="100" min="30" max="200">(30~200)
+		
+		<h3>4）股票范围：</h3>
+		<label>当前处理为全部股票。</label>
+		
+		<div align="center">
+			<button id="btn_query" onclick="putParam()">提交处理</button>
+		</div>
+		
+		<hr>
+		<h2>处理过程</h2>
+		<div align="center">
+			<div class="processcontainer">
+				<div id="processbar" style="width:0%;"></div>
+	  		</div>
   		</div>
 		
+		<hr>
+		<h2>处理结果</h2>
+		<h3>过滤结果：</h3>
+		<p> CZ.000001, CZ000456 </p>
+		<h3>图片下载：</h3>
+		<button id="btn_download" onclick="downloadimg()">下载图片包</button>
 		
-		处理结果：
 		
+		
+		
+		
+		<hr>
+		<h5>版本更新说明：</h5>
+		<h6>v0.1</h6>
+		<ul> 
+			<li >实现对所有股票的量化过滤。</li>
+			<li >实现对2阶导算法的支持。</li>
+			<li >实现结果的图像化输出。</li>
+		</ul>
+		
+		<hr>
+		<div align="center">
+			<img src="img/stat.png" height="30" width="30" />
+		</div>
 		
 	</body>
 </html>
