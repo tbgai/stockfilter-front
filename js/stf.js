@@ -1,4 +1,5 @@
-
+var pos = 0;
+var bartimer;
 
 function putParam(){
 	// 提交相关参数到后台进行处理
@@ -6,13 +7,12 @@ function putParam(){
 
 	// 启动定时查询
 	startQuery();
+	pos = 0;
 	// 将按钮disabled
 	var btn = document.getElementById("btn_query");
 	btn.disabled = true;
 }
 
-var pos = 0;
-var bartimer;
 
 function queryRate(){
 	// 查询后台处理进度
@@ -29,6 +29,8 @@ function setProcess( pos ){
 		processbar.style.width = 100;
 		processbar.innerHTML = processbar.style.width;
 		window.clearInterval(bartimer);
+		var btn = document.getElementById("btn_query");
+		btn.disabled = false;
 	}
 	else {
   		processbar.style.width = pos + "%";
@@ -41,3 +43,7 @@ function startQuery(){
 	bartimer = window.setInterval(function(){queryRate();},100);
 }
 
+function downloadimg(){
+	// 
+	
+}
