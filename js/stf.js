@@ -1,11 +1,9 @@
 var pos = 0;
 var bartimer;
+var gSid = '';
+var gUrl = '';
+var SERVER_URL = 'http://127.0.0.1:5000/sf/api/v1.0/';
 
-//String.prototype.trim = function() {
-//  return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-//}
-
-var sid = '';
 
 function putParam(){
 
@@ -13,6 +11,7 @@ function putParam(){
 	$(document).ready(function(){
 		
 		var basestk = $("#basestk_txt").val();
+		basestk = jQuery.trim( basestk );
 		if ( basestk.length == "" ) {
 			alert("基准股票数据不能为空");
 			return;
@@ -52,7 +51,7 @@ function putParam(){
 		// 推送至服务器端接口
 		$.ajax({
 			type:"POST",
-			url:"http://127.0.0.1:5000/sf/api/v1.0/stockfilter/",
+			url:SERVER_URL+"stockfilter/",
 			data:{
 				basestk:basestk,
 				delta2:delta2val,
@@ -62,8 +61,8 @@ function putParam(){
 			},
 			success:function( data ){
 			$.each( data, function(key,value) {
-				sid = data[key];
-				
+				gSid = data[key];
+				gUrl = "";
 				// 启动定时查询
 				startQuery();
 				pos = 0;
@@ -88,9 +87,9 @@ function queryRate(){
 		
 		$.ajax({
 			type:"GET",
-			url:"http://127.0.0.1:5000/sf/api/v1.0/querypos/",
+			url:SERVER_URL+"querypos/",
 			data:{
-				sid:sid
+				sid:gSid
 			},
 			success:function( data ){
 			$.each( data, function(key,value) {
@@ -114,17 +113,17 @@ function setProcess( pos ){
 		$(document).ready(function(){
 			$.ajax({
 				type:"GET",
-				url:"http://127.0.0.1:5000/sf/api/v1.0/queryres/",
+				url:SERVER_URL+"queryres/",
 				data:{
-					sid:sid
+					sid:gSid
 				},
 				success:function( data ){
 				$.each( data, function(key,value) {
-					res = data[key];
+					res = data["res"];
+					gUrl = data['purl'];
 					
 					// 设置结果
 					$("#filterres_p").text( res );
-					
 					
 				});
 				},
@@ -151,6 +150,11 @@ function startQuery(){
 }
 
 function downloadimg(){
-	// 
-	
+	// test : http://47.104.252.239/test.tar.gz
+	if ( gUrl.length > 0 ){
+		window.open( gUrl );
+	}
+	else{
+		alert( "当前暂无可下载的结果图片，请先提交过滤处理！" );
+	}
 }
