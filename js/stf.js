@@ -107,7 +107,7 @@ function queryRate(){
 
 function setProcess( pos ){
 	var processbar = document.getElementById("processbar");
-	if ( pos > 100 ) {
+	if ( pos >= 100 ) {
 		processbar.style.width = 100 + "%";
 		
 		$(document).ready(function(){
