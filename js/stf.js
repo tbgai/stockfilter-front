@@ -123,7 +123,13 @@ function setProcess( pos ){
 					gUrl = data['purl'];
 					
 					// 设置结果
-					$("#filterres_p").text( res );
+					if ( res.length > 0 ){
+						$("#filterres_p").text( res );
+					}
+					else{
+						$("#filterres_p").text("结果为空")
+					}
+					
 					
 				});
 				},
