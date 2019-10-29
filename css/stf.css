@@ -29,6 +29,18 @@ h6{
 	font-weight: normal;
 }
 
+.label1{
+	font: "微软雅黑";
+	font-size: 16px;
+	font-weight: normal;
+}
+
+.label2{
+	font: "微软雅黑";
+	font-size: 14px;
+	font-weight: normal;
+}
+
 label{
 	font:"微软雅黑";
 	font-size: 12px;
