@@ -1,8 +1,10 @@
+var SERVER_URL = 'http://127.0.0.1:5000/sf/api/v1.0/';
 var pos = 0;
 var bartimer;
 var gSid = '';
 var gUrl = '';
-var SERVER_URL = 'http://127.0.0.1:5000/sf/api/v1.0/';
+var gProcessTime = 0;
+var gProcessStart = 0;
 
 
 function putParam(){
@@ -10,6 +12,9 @@ function putParam(){
 	// 获取相关参数值，调用接口推送到后台查询
 	$(document).ready(function(){
 		
+		if ( !confirm("参数设置确认吗？") ){
+			return;
+		}
 		var basestk = $("#basestk_txt").val();
 		basestk = jQuery.trim( basestk );
 		if ( basestk.length == "" ) {
@@ -66,6 +71,12 @@ function putParam(){
 				// 启动定时查询
 				startQuery();
 				pos = 0;
+				gProcessTime = 0;
+				var time_start = new Date();
+				gProcessStart = time_start.getTime();
+				$("#process_time").text( "00:00:00" );
+				
+				$("#filterres_p").text("");
 				// 将按钮disabled
 				var btn = document.getElementById("btn_query");
 				btn.disabled = true;
@@ -102,6 +113,16 @@ function queryRate(){
 			}
 		});
 		
+		// 处理时间更新
+		var time_now = new Date();
+		gProcessTime = parseInt((time_now.getTime() - gProcessStart)/1000);
+		var isec = gProcessTime % 60;
+		var imin = parseInt( gProcessTime / 60 );
+		var ihour = parseInt( gProcessTime / 3600 );
+		var s_sec = "" + ((isec>9)?isec:"0"+isec);
+		var s_min = "" + ((imin>9)?imin:"0"+imin);
+		var s_hour = "" + ((ihour>9)?ihour:"0"+ihour);
+		$("#process_time").text(s_hour+":"+s_min+":"+s_sec);
 	});
 }
 
@@ -127,9 +148,8 @@ function setProcess( pos ){
 						$("#filterres_p").text( res );
 					}
 					else{
-						$("#filterres_p").text("结果为空")
+						$("#filterres_p").text("结果为空");
 					}
-					
 					
 				});
 				},
