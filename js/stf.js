@@ -6,6 +6,31 @@ var gUrl = '';
 var gProcessTime = 0;
 var gProcessStart = 0;
 
+$(document).ready(function(){
+	
+	$("#div_basegraph").hide();
+	$("#res_table").hide();
+
+});
+
+function baseGraph(){
+	
+	$(document).ready(function(){
+		
+		//
+		//$("body").css("cursor", "progress");
+		
+		
+		$("#div_basegraph").show();
+		$("#base_img1").attr("src","img/002250.SZ_100.jpg");
+		$("#base_img2").attr("src","img/002250.SZ_100.jpg");
+		$("#base_img3").attr("src","img/002250.SZ_100.jpg");
+		
+		//sleep(3000);
+		
+		//$("body").css("cursor", "default");
+	});
+}
 
 function putParam(){
 
@@ -146,6 +171,15 @@ function setProcess( pos ){
 					// 设置结果
 					if ( res.length > 0 ){
 						$("#filterres_p").text( res );
+						
+						// 显示结果股票的图形数据
+						$("#res_table").show();
+						var shtml = "";
+						shtml += "<tr><td>002314.SZ</td><td><img src='img/002250.SZ_100.jpg' height='300'>" +
+							        "<img src='img/002250.SZ_D2.jpg' height='300'>" + 
+							        "</td></tr>"
+						$("#res_table").append(shtml);
+						
 					}
 					else{
 						$("#filterres_p").text("结果为空");
