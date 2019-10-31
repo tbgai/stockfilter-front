@@ -13,8 +13,15 @@
 		<hr>
 		<h2>参数设置</h2>
 		<h3>1）基准数据（可以根据需要自行修改设定[10~40]）：</h3>
-		<input type="text" name="basestk" id="basestk_txt" class="item_text1" value="20.31,21.27,21.89,21.53,22.65,22.98,23.23,22.7,22.34,21.76,22.09,21.6,21.9,21.88,23.1,22.99,22.54,22.63,22.52,22.99">
-		
+		<div align="center">
+			<input type="text" name="basestk" id="basestk_txt" class="item_text1" value="20.31,21.27,21.89,21.53,22.65,22.98,23.23,22.7,22.34,21.76,22.09,21.6,21.9,21.88,23.1,22.99,22.54,22.63,22.52,22.99">
+			<button id="btn_basegraph" onclick="baseGraph()">绘图</button>
+		</div>
+		<div align="center" id="div_basegraph">
+			<img id="base_img1" src="" height="300">
+			<img id="base_img2" src="" height="300">
+			<img id="base_img3" src="" height="300">
+		</div>
 		<h3>2）算法参数：</h3>
 		<label>是否二阶过滤：</label><input type="checkbox" id="delta2_chk" value="0" checked="true">
 		<br>
@@ -46,11 +53,31 @@
 		<h3>过滤结果：</h3>
 		<p id="filterres_p">  </p>
 		<label>图片下载：</label><button id="btn_download" onclick="downloadimg()">下载图片包</button>
+		<div align="center">
+			<table border="1" id="res_table">
+			    <tr>
+			        <th>股票代码</th>
+			        <th>图形</th>
+			    </tr>
+			    <tr>
+			        <td>002314.SZ</td>
+			        <td><img id="base_img1" src="img/002250.SZ_100.jpg" height="300">
+			        <img id="base_img2" src="img/002250.SZ_D2.jpg" height="300">
+			        </td>
+			    </tr>
+			</table>
+		</div>
 		<h5> </h5>
 		
 		
 		<hr>
 		<h5>版本更新说明：</h5>
+		<label class="item_text3">v0.2</label>
+		<label> 
+			<li >基准股票数据的图形化展示。</li>
+			<li >过滤结果股票数据的图形化展示。</li>
+			<li >优化后台数据更新流程。</li>
+		</label>
 		<label class="item_text3">v0.1</label>
 		<label> 
 			<li >实现对所有股票的量化过滤。</li>
