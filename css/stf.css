@@ -91,7 +91,7 @@ p{
 
 .item_text1{
 	border:1px solid grey;
-	width: 100%;
+	width: 80%;
 	height: 32px;
 	font-size: 18px;
 	font-weight: lighter;
@@ -112,3 +112,16 @@ p{
 	color: darkgray;
 	font-weight: normal;
 }
+
+table{
+	margin: 0;
+	padding: 0;
+	width: 80%;
+	display: table-row;
+	vertical-align: middle;
+	border-color: grey;
+	border-spacing: 0;
+	line-height: 1.7;
+	border-collapse: collapse;
+}
+
