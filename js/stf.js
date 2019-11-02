@@ -17,18 +17,51 @@ function baseGraph(){
 	
 	$(document).ready(function(){
 		
-		//
-		//$("body").css("cursor", "progress");
-		
-		
-		$("#div_basegraph").show();
-		$("#base_img1").attr("src","img/002250.SZ_100.jpg");
-		$("#base_img2").attr("src","img/002250.SZ_100.jpg");
-		$("#base_img3").attr("src","img/002250.SZ_100.jpg");
-		
-		//sleep(3000);
-		
-		//$("body").css("cursor", "default");
+		var basestk = $("#basestk_txt").val();
+		basestk = jQuery.trim( basestk );
+		if ( basestk.length == "" ) {
+			alert("基准股票数据不能为空");
+			return;
+		}
+		var arr = basestk.split(',');
+		if ( arr.length < 10 || arr.length > 40 )
+		{
+			alert("基准股票数据范围：10 <= 长度 <= 40 ");
+			return;
+		}
+		$("#btn_basegraph").attr("disabled","true");
+
+		$.ajax({
+			type:"POST",
+			url:SERVER_URL+"stockgraph/",
+			data:{
+				basestk:basestk
+			},
+			success:function( data ){
+				img1 = "";
+				img2 = "";
+				img3 = "";
+				$.each( data, function(key,value) {
+					img1 = data['img1'];
+					img2 = data['img2'];
+					img3 = data['img3'];
+				});
+				if ( img1 != "" && img2 != "" && img3 != "" ) {
+					$("#div_basegraph").show();
+					$("#base_img1").attr( "src", img1 );
+					$("#base_img2").attr( "src", img2 );
+					$("#base_img3").attr( "src", img3 );
+				}
+				else {
+					alert("请求基准数据图形失败，请稍后再试！");
+				}
+				$("#btn_basegraph").removeAttr("disabled");
+			},
+			error:function(){
+				alert("请求服务失败，请稍后再试！");
+				$("#btn_basegraph").removeAttr("disabled");
+			}
+		});
 	});
 }
 
@@ -42,8 +75,15 @@ function putParam(){
 		}
 		var basestk = $("#basestk_txt").val();
 		basestk = jQuery.trim( basestk );
-		if ( basestk.length == "" ) {
+		if ( basestk == "" ) {
 			alert("基准股票数据不能为空");
+			return;
+		}
+		// 判断基准数据的长度
+		var arr = basestk.split(',');
+		if ( arr.length < 10 || arr.length > 40 )
+		{
+			alert("基准股票数据范围：10 <= 长度 <= 40 ");
 			return;
 		}
 		
@@ -165,7 +205,7 @@ function setProcess( pos ){
 				},
 				success:function( data ){
 				$.each( data, function(key,value) {
-					res = data["res"];
+					res = data['res'];
 					gUrl = data['purl'];
 					
 					// 设置结果
