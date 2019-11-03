@@ -7,7 +7,7 @@ var gProcessTime = 0;
 var gProcessStart = 0;
 
 $(document).ready(function(){
-	
+
 	$("#div_basegraph").hide();
 	$("#res_table").hide();
 
@@ -30,6 +30,7 @@ function baseGraph(){
 			return;
 		}
 		$("#btn_basegraph").attr("disabled","true");
+		$('body').addClass('waiting');
 
 		$.ajax({
 			type:"POST",
@@ -56,10 +57,12 @@ function baseGraph(){
 					alert("请求基准数据图形失败，请稍后再试！");
 				}
 				$("#btn_basegraph").removeAttr("disabled");
+				$('body').removeClass('waiting');
 			},
 			error:function(){
 				alert("请求服务失败，请稍后再试！");
 				$("#btn_basegraph").removeAttr("disabled");
+				$('body').removeClass('waiting');
 			}
 		});
 	});
@@ -145,6 +148,7 @@ function putParam(){
 				// 将按钮disabled
 				var btn = document.getElementById("btn_query");
 				btn.disabled = true;
+				$('body').addClass('waiting');
 			});
 			},
 			error:function(){
@@ -207,25 +211,30 @@ function setProcess( pos ){
 				$.each( data, function(key,value) {
 					res = data['res'];
 					gUrl = data['purl'];
-					
-					// 设置结果
-					if ( res.length > 0 ){
-						$("#filterres_p").text( res );
-						
-						// 显示结果股票的图形数据
-						$("#res_table").show();
-						var shtml = "";
-						shtml += "<tr><td>002314.SZ</td><td><img src='img/002250.SZ_100.jpg' height='300'>" +
-							        "<img src='img/002250.SZ_D2.jpg' height='300'>" + 
-							        "</td></tr>"
-						$("#res_table").append(shtml);
-						
-					}
-					else{
-						$("#filterres_p").text("结果为空");
-					}
-					
+					imgs = data['imgs'];
 				});
+				// 设置结果
+				if ( res.length > 0 ){
+					$("#filterres_p").text( res );
+					
+					var jsondata = $.parseJSON( imgs );
+					//console.info( jsondata.data );
+					//console.info( jsondata.data[0][0] );
+					
+					// 显示结果股票的图形数据
+					$("#res_table").show();
+					var shtml = "";
+					for ( var i=0; i<jsondata.data.length; i++ ) {
+						shtml += "<tr><td>"+jsondata.data[i][0]+"</td><td><img src='"+jsondata.data[i][1]+"' height='300'>" +
+						        "<img src='"+jsondata.data[i][2]+"' height='300'>" + 
+						        "</td></tr>"
+					}
+					$("#res_table").append(shtml);
+				}
+				else{
+					$("#filterres_p").text("结果为空");
+				}
+				
 				},
 				error:function(){
 					console.log("queryres - 请求服务失败，请稍后再试！")
@@ -236,6 +245,7 @@ function setProcess( pos ){
 		window.clearInterval(bartimer);
 		var btn = document.getElementById("btn_query");
 		btn.disabled = false;
+		$('body').removeClass('waiting');
 
 	}
 	else {
