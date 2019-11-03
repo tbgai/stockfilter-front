@@ -29,6 +29,10 @@ h6{
 	font-weight: normal;
 }
 
+body.waiting * {
+    cursor: progress;
+}
+
 .label1{
 	font: "微软雅黑";
 	font-size: 16px;
