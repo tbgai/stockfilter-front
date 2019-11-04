@@ -3,6 +3,7 @@ var pos = 0;
 var bartimer;
 var gSid = '';
 var gUrl = '';
+var gResCount = 0;
 var gProcessTime = 0;
 var gProcessStart = 0;
 
@@ -30,6 +31,7 @@ function baseGraph(){
 			return;
 		}
 		$("#btn_basegraph").attr("disabled","true");
+		$("#div_basegraph").hide();
 		$('body').addClass('waiting');
 
 		$.ajax({
@@ -144,7 +146,14 @@ function putParam(){
 				gProcessStart = time_start.getTime();
 				$("#process_time").text( "00:00:00" );
 				
+				// 清理结果数据
 				$("#filterres_p").text("");
+				for ( var i=0; i<gResCount; i++ )
+				{
+					$("tr[id='res"+i+"']").remove();
+				}
+				gResCount = 0;
+				$("#res_table").hide();
 				// 将按钮disabled
 				var btn = document.getElementById("btn_query");
 				btn.disabled = true;
@@ -225,10 +234,11 @@ function setProcess( pos ){
 					$("#res_table").show();
 					var shtml = "";
 					for ( var i=0; i<jsondata.data.length; i++ ) {
-						shtml += "<tr><td>"+jsondata.data[i][0]+"</td><td><img src='"+jsondata.data[i][1]+"' height='300'>" +
+						shtml += "<tr id='res"+i+"'><td>"+jsondata.data[i][0]+"</td><td><img src='"+jsondata.data[i][1]+"' height='300'>" +
 						        "<img src='"+jsondata.data[i][2]+"' height='300'>" + 
 						        "</td></tr>"
 					}
+					gResCount = jsondata.data.length;
 					$("#res_table").append(shtml);
 				}
 				else{
